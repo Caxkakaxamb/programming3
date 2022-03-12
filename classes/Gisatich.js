@@ -1,21 +1,11 @@
-class GrassEater {
 
-    constructor(x, y, id) {
-        this.x = x;
-        this.y = y;
-        this.id = id;
-        this.energy = 8;
-        this.directions = [
-            [this.x - 1, this.y - 1],
-            [this.x, this.y - 1],
-            [this.x + 1, this.y - 1],
-            [this.x - 1, this.y],
-            [this.x + 1, this.y],
-            [this.x - 1, this.y + 1],
-            [this.x, this.y + 1],
-            [this.x + 1, this.y + 1]
-        ];
+
+class Gisatich extends LivingCreature{
+    constructor(x,y){
+        super(x,y)
+        this.energy=8
     }
+    
     chooseCell(character) {
         this.getNewCoordinates();
         var found = [];
@@ -51,10 +41,11 @@ class GrassEater {
             var newY = newCell[1];
             matrix[newY][newX] = this.id;
 
-            var newGrassEater = new GrassEater(newX, newY, this.id);
-            grassEaterArr.push(newGrassEater);
+            var newGisatich = new Gisatich(newX, newY, this.id);
+            gisatichArr.push(newGisatich);
             this.energy = 8;
         }
+
     }
 
     move() {
@@ -74,9 +65,7 @@ class GrassEater {
         this.die();
     }
     eat() {
-        var emptyCellsTunavorMichat = this.chooseCell(5);
-        var emptyCellsGrass = this.chooseCell(1);
-        var emptyCells = emptyCellsTunavorMichat.concat(emptyCellsGrass)
+        var emptyCells = this.chooseCell(2);
         var newCell = random(emptyCells);
         if (newCell) {
             var newX = newCell[0];
@@ -90,15 +79,9 @@ class GrassEater {
 
             this.energy++;
 
-            for (var i in grassArr) {
-                if (newX == grassArr[i].x && newY == grassArr[i].y) {
-                    grassArr.splice(i, 1);
-                    break;
-                }
-            }
-            for (var i in tunavorMichatArr) {
-                if (newX == tunavorMichatArr[i].x && newY == tunavorMichatArr[i].y) {
-                    tunavorMichatArr.splice(i, 1);
+            for (var i in grassEaterArr) {
+                if (newX == grassEaterArr[i].x && newY == grassEaterArr[i].y) {
+                    grassEaterArr.splice(i, 1);
                     break;
                 }
             }
@@ -111,9 +94,9 @@ class GrassEater {
 
     die() {
         if (this.energy <= 0) {
-            for (var i in grassEaterArr) {
-                if (this.x == grassEaterArr[i].x && this.y == grassEaterArr[i].y) {
-                    grassEaterArr.splice(i, 1);
+            for (var i in gisatichArr) {
+                if (this.x == gisatichArr[i].x && this.y == gisatichArr[i].y) {
+                    gisatichArr.splice(i, 1);
                     break;
                 }
             }
